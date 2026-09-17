@@ -34,7 +34,3 @@ A software platform developed for the University of Arizona College of Engineeri
 
 ### Installation & Setup
 
-1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/your-organization/uasams.git](https://github.com/your-organization/uasams.git)
-   cd uasams
