@@ -27,4 +27,13 @@ public class Scholarship {
     
     private String disbursementInstructions;
     private String status;
+    
+    @OneToMany(mappedBy = "scholarship", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ScholarshipQuestion> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "scholarship")
+    private List<Application> applications = new ArrayList<>();
+
+    @OneToMany(mappedBy = "scholarship")
+    private List<AwardSelection> awardSelections = new ArrayList<>();
 }

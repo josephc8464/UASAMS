@@ -17,6 +17,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -46,6 +49,12 @@ public class User implements UserDetails {
     private String password;
 
     private Set<UserRole> roles;
+
+    @OneToMany(mappedBy = "reviewer")
+    private List<ApplicationReview> conductedReviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "designatedPanelUser")
+    private List<AwardSelection> decidedAwards = new ArrayList<>();
     
     @Override public String getUsername() { return this.email; }
     @Override public String getPassword() { return this.password; }

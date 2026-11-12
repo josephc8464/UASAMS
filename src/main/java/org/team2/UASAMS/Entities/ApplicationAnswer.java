@@ -14,4 +14,12 @@ public class ApplicationAnswer {
     private Long id;
 
     private String answerValue;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "application_id", nullable = false)
+    private Application application;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id", nullable = false)
+    private ScholarshipQuestion question;
 }
