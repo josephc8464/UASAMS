@@ -9,6 +9,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +22,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +33,16 @@ public class User implements UserDetails {
     private String lastName;
 
     @Column(unique = true)
+    @NotNull 
     private String username;
 
     @Column(unique = true)
+    @NotNull 
     private String email;
+
+    @NotBlank 
+    @NotEmpty 
+    @NotNull 
     private String password;
 
     private Set<UserRole> roles;

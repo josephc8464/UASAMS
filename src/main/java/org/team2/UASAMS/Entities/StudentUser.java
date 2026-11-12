@@ -11,11 +11,13 @@ import java.util.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "student_users")
 public class StudentUser extends User{
 
     private int studentIdNum;
-    private int year; //Freshman, Sophomore, Junior, Senior
+    private int academic_year;
     
+    @Column(precision = 3, scale = 2) //Limits to 3 digits, two after decimal point
     private float gpa;
 
     private LocalDateTime birthday;
@@ -23,7 +25,7 @@ public class StudentUser extends User{
 
     private List<String> majors = new ArrayList<>();
     private List<String> minors = new ArrayList<>();
-    private List<String> demographics = new ArrayList<>();
+    //TODO: FIX ME private List<String> demographics = new ArrayList<>();
 
     private String school;
 }
