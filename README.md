@@ -5,7 +5,7 @@ A software platform developed for the University of Arizona College of Engineeri
 ## Tech Stack
 
 * **Backend:** Java / Spring Boot
-* **Frontend:** React (Planned) or Thymeleaf (Server-Side)
+* **Frontend:** Thymeleaf (Server-Side)
 * **Build Tool:** Maven / Gradle
 
 ## Primary Subsystems
@@ -29,7 +29,6 @@ A software platform developed for the University of Arizona College of Engineeri
 
 * Java Development Kit (JDK 17+)
 * Maven
-* Node.js & npm (if using React)
 * Git
 
 ### Installation & Setup
