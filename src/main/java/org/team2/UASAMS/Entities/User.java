@@ -1,6 +1,7 @@
 package org.team2.UASAMS.Entities;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -48,7 +49,11 @@ public class User implements UserDetails {
     @NotNull 
     private String password;
 
-    private Set<UserRole> roles;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name = "user_role_assignment", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role_enum")
+    private Set<UserRole> roles = new HashSet<>(Set.of(UserRole.ROLE_GUEST));
 
     @OneToMany(mappedBy = "reviewer")
     private List<ApplicationReview> conductedReviews = new ArrayList<>();

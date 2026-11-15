@@ -1,6 +1,7 @@
 package org.team2.UASAMS.Entities;
 
 public enum UserRole {
+    ROLE_GUEST,
     ROLE_STUDENT, 
     ROLE_ADMIN, 
     ROLE_REVIEWER, 
