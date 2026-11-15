@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.config.Customizer;
+import org.team2.UASAMS.Services.CustomUserDetailsService;
 
 /**
  * 
@@ -25,6 +25,13 @@ import org.springframework.security.config.Customizer;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final CustomUserDetailsService customUserDetailsService;
+    private final CustomSuccessHandler customSuccessHandler;
+
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService, CustomSuccessHandler customSuccessHandler) {
+        this.customUserDetailsService = customUserDetailsService;
+        this.customSuccessHandler = customSuccessHandler;
+    }
 
     // Configure HTTP security, authentication, and authorization rules
     // Links /login, /register for login, and /logout for logout
@@ -38,7 +45,13 @@ public class SecurityConfig {
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults())
+                .userDetailsService(customUserDetailsService)
+                .formLogin(form -> form
+                    .loginPage("/login")
+                    .loginProcessingUrl("/login")
+                    .successHandler(customSuccessHandler)
+                    .permitAll()
+                )
                 .build();
     }
 
