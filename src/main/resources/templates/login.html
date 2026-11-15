@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>UASAMS - Login</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; margin-top: 60px; background: #f4f6f8; }
+        .card { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); width: 340px; }
+        input { width: 100%; padding: 10px; margin: 8px 0 16px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #0c234b; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .msg-error { color: #b00020; margin-bottom: 12px; }
+        .msg-success { color: #1b5e20; margin-bottom: 12px; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h2>Sign In</h2>
+
+    <div th:if="${param.error}" class="msg-error">Invalid username or password.</div>
+    <div th:if="${param.logout}" class="msg-success">You have been logged out.</div>
+    <div th:if="${param.registered}" class="msg-success">Account created! Please sign in.</div>
+
+    <form th:action="@{/login}" method="post">
+        <label>Username</label>
+        <input type="text" name="username" required autofocus />
+
+        <label>Password</label>
+        <input type="password" name="password" required />
+
+        <button type="submit">Log In</button>
+    </form>
+
+    <p style="margin-top: 16px; text-align: center;">
+        Don't have an account? <a th:href="@{/signup}">Create Account</a>
+    </p>
+</div>
+</body>
+</html>
