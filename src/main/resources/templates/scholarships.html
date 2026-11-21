@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+   
+
+<head>
+   <title>Available Scholarships</title>
+</head>
+<body>
+    <h1>Available Scholarships</h1>
+
+    <p th:if= "${#lists.isEmpty(scholarships)}">
+        No published scholarships are currently available.
+    </p>
+
+    <div th:each = "scholarship : ${scholarships}">
+        <h2 th:text = "${scholarship.name}"></h2>
+
+        <p th:text = "${scholarship.description}"></p>
+
+        <p>
+            Award Amount:
+            <span th:text="${scholarship.awardAmount}"></span>
+        </p>
+
+    </div>"
+
+</body>
+
+</html>
