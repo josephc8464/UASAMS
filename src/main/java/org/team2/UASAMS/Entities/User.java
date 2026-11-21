@@ -49,11 +49,7 @@ public class User implements UserDetails {
     @NotNull 
     private String password;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_role_assignment", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "role_enum")
-    private Set<UserRole> roles = new HashSet<>(Set.of(UserRole.ROLE_GUEST));
+    private Set<UserRole> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "reviewer")
     private List<ApplicationReview> conductedReviews = new ArrayList<>();
@@ -69,5 +65,9 @@ public class User implements UserDetails {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.name()))
                 .collect(Collectors.toList());
+    }
+
+    public void addRole(UserRole role) {
+        this.roles.add(role);
     }
 }

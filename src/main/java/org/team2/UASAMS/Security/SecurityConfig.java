@@ -10,10 +10,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.team2.UASAMS.Services.CustomUserDetailsService;
 
 /**
- * 
  * Configures Spring Security for our application. 
  * 
  * This class defines authentication and authorization rules. It integrates our
+ * CustomUserDetailsService and CustomSuccessHandler.
  * 
  * This class also defines the endpoints for login and logout. The password encoder is also
  * used to verify user credentials.
@@ -42,6 +42,9 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/register", "/h2-console/**", "/signup", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/student/signup", "/faculty/signup").hasRole("GUEST")
+                        .requestMatchers("/student/**").hasRole("STUDENT")
+                        .requestMatchers("/faculty/**").hasRole("FACULTY")
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().authenticated()
                 )
@@ -50,6 +53,11 @@ public class SecurityConfig {
                     .loginPage("/login")
                     .loginProcessingUrl("/login")
                     .successHandler(customSuccessHandler)
+                    .permitAll()
+                )
+                .logout(logout -> logout
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login?logout")
                     .permitAll()
                 )
                 .build();

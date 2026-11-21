@@ -33,10 +33,11 @@ public class AuthController {
             @RequestParam String password,
             @RequestParam String firstName,
             @RequestParam String lastName,
+            @RequestParam (defaultValue = "ROLE_GUEST") String role,
             Model model
     ) {
         try {
-            authService.signupUser(username, email, password, firstName, lastName);
+            authService.signupUser(username, email, password, firstName, lastName, role);
             return "redirect:/login?registered";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());

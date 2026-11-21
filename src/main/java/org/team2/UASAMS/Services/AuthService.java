@@ -4,6 +4,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.team2.UASAMS.Entities.User;
+import org.team2.UASAMS.Entities.UserRole;
 import org.team2.UASAMS.Repos.UserRepository;
 
 import jakarta.transaction.Transactional;
@@ -33,7 +34,7 @@ public class AuthService {
     }
 
     @Transactional
-    public void signupUser(String username, String email, String password, String firstName, String lastName) {
+    public void signupUser(String username, String email, String password, String firstName, String lastName, String role) {
         boolean emailExists = userRepository.findByEmail(email).isPresent();
         boolean usernameExists = userRepository.findByUsername(username).isPresent();
 
@@ -50,6 +51,7 @@ public class AuthService {
         user.setLastName(lastName);
         user.setUsername(username);
         user.setEmail(email);
+        user.addRole(UserRole.fromString(role));
         user.setPassword(passwordEncoder.encode(password));
 
         userRepository.save(user); 
