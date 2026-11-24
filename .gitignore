@@ -1,8 +1,16 @@
 HELP.md
 target/
+**/target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+### Compiled Java & Packages ###
+*.class
+*.jar
+*.war
+*.ear
+bin/
 
 ### STS ###
 .apt_generated
