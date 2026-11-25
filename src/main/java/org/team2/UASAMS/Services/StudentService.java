@@ -1,12 +1,14 @@
 package org.team2.UASAMS.Services;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.team2.UASAMS.Entities.StudentUser;
 import org.team2.UASAMS.Entities.User;
-import org.team2.UASAMS.Entities.UserRole;
+import org.team2.UASAMS.Entities.Enums.Major;
+import org.team2.UASAMS.Entities.Enums.UserRole;
 import org.team2.UASAMS.Repos.StudentUserRepository;
 import org.team2.UASAMS.Repos.UserRepository;
 
@@ -30,9 +32,9 @@ public class StudentService {
 
     @Transactional
     public StudentUser upgradeGuestToStudent(
+            int studentIdNum,
             String email,
-            String schoolName,
-            String major,
+            Major major,
             float gpa,
             LocalDate birthday,
             LocalDate gradDate,
@@ -65,10 +67,11 @@ public class StudentService {
         // 2. Insert child row into student_users linked by user.getId()
         userRepository.promoteToStudentTable(
                 user.getId(),
+                studentIdNum,
                 gpa,
                 birthday,
                 gradDate,
-                schoolName
+                major
         );
 
         // 3. Clear Hibernate cache so it reloads the row as a StudentUser instance
@@ -76,11 +79,6 @@ public class StudentService {
 
         StudentUser studentUser = studentUserRepository.findById(user.getId())
                 .orElseThrow(() -> new IllegalStateException("Failed to load upgraded StudentUser."));
-
-        // 4. Add the major to StudentUser's majors list
-        if (major != null && !major.isBlank()) {
-            studentUser.getMajors().add(major.trim());
-        }
 
         return studentUserRepository.save(studentUser);
     }

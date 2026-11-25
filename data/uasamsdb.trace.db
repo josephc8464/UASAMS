@@ -1,0 +1,36 @@
+2026-11-25 15:44:35.213479-07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'[0]' (USERS: ""ROLES"" TINYINT ARRAY)"; SQL statement:
+UPDATE "PUBLIC"."USERS" SET "ID"=? ,"EMAIL"=? ,"ENABLED"=? ,"FIRST_NAME"=? ,"LAST_NAME"=? ,"PASSWORD"=? ,"ROLES"=? ,"USERNAME"=?  WHERE "ID"=? [22018-240]
+2026-11-25 15:44:35.215477-07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'[0]' (USERS: ""ROLES"" TINYINT ARRAY)"; SQL statement:
+UPDATE "PUBLIC"."USERS" SET "ID"=? ,"EMAIL"=? ,"ENABLED"=? ,"FIRST_NAME"=? ,"LAST_NAME"=? ,"PASSWORD"=? ,"ROLES"=? ,"USERNAME"=?  WHERE "ID"=? [22018-240]
+2026-11-25 15:44:49.150371-07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'[0]' (USERS: ""ROLES"" TINYINT ARRAY)"; SQL statement:
+UPDATE "PUBLIC"."USERS" SET "ID"=? ,"EMAIL"=? ,"ENABLED"=? ,"FIRST_NAME"=? ,"LAST_NAME"=? ,"PASSWORD"=? ,"ROLES"=? ,"USERNAME"=?  WHERE "ID"=? [22018-240]
+2026-11-25 15:44:49.150877-07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'[0]' (USERS: ""ROLES"" TINYINT ARRAY)"; SQL statement:
+UPDATE "PUBLIC"."USERS" SET "ID"=? ,"EMAIL"=? ,"ENABLED"=? ,"FIRST_NAME"=? ,"LAST_NAME"=? ,"PASSWORD"=? ,"ROLES"=? ,"USERNAME"=?  WHERE "ID"=? [22018-240]
+2026-11-25 15:44:52.921993-07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'[0]' (USERS: ""ROLES"" TINYINT ARRAY)"; SQL statement:
+UPDATE "PUBLIC"."USERS" SET "ID"=? ,"EMAIL"=? ,"ENABLED"=? ,"FIRST_NAME"=? ,"LAST_NAME"=? ,"PASSWORD"=? ,"ROLES"=? ,"USERNAME"=?  WHERE "ID"=? [22018-240]
+2026-11-25 15:44:52.923022-07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'[0]' (USERS: ""ROLES"" TINYINT ARRAY)"; SQL statement:
+UPDATE "PUBLIC"."USERS" SET "ID"=? ,"EMAIL"=? ,"ENABLED"=? ,"FIRST_NAME"=? ,"LAST_NAME"=? ,"PASSWORD"=? ,"ROLES"=? ,"USERNAME"=?  WHERE "ID"=? [22018-240]
+2026-11-25 15:44:57.256167-07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'[0]' (USERS: ""ROLES"" TINYINT ARRAY)"; SQL statement:
+UPDATE "PUBLIC"."USERS" SET "ID"=? ,"EMAIL"=? ,"ENABLED"=? ,"FIRST_NAME"=? ,"LAST_NAME"=? ,"PASSWORD"=? ,"ROLES"=? ,"USERNAME"=?  WHERE "ID"=? [22018-240]
+2026-11-25 15:44:57.256167-07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'[0]' (USERS: ""ROLES"" TINYINT ARRAY)"; SQL statement:
+UPDATE "PUBLIC"."USERS" SET "ID"=? ,"EMAIL"=? ,"ENABLED"=? ,"FIRST_NAME"=? ,"LAST_NAME"=? ,"PASSWORD"=? ,"ROLES"=? ,"USERNAME"=?  WHERE "ID"=? [22018-240]
+2026-11-25 15:45:32.892932-07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'[0]' (USERS: ""ROLES"" TINYINT ARRAY)"; SQL statement:
+UPDATE "PUBLIC"."USERS" SET "ID"=? ,"EMAIL"=? ,"ENABLED"=? ,"FIRST_NAME"=? ,"LAST_NAME"=? ,"PASSWORD"=? ,"ROLES"=? ,"USERNAME"=?  WHERE "ID"=? [22018-240]
+2026-11-25 15:45:32.892932-07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'[0]' (USERS: ""ROLES"" TINYINT ARRAY)"; SQL statement:
+UPDATE "PUBLIC"."USERS" SET "ID"=? ,"EMAIL"=? ,"ENABLED"=? ,"FIRST_NAME"=? ,"LAST_NAME"=? ,"PASSWORD"=? ,"ROLES"=? ,"USERNAME"=?  WHERE "ID"=? [22018-240]
+2026-11-25 15:45:54.335918-07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'[0]' (USERS: ""ROLES"" TINYINT ARRAY)"; SQL statement:
+UPDATE "PUBLIC"."USERS" SET "ID"=? ,"EMAIL"=? ,"ENABLED"=? ,"FIRST_NAME"=? ,"LAST_NAME"=? ,"PASSWORD"=? ,"ROLES"=? ,"USERNAME"=?  WHERE "ID"=? [22018-240]
+2026-11-25 15:45:54.335918-07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'[0]' (USERS: ""ROLES"" TINYINT ARRAY)"; SQL statement:
+UPDATE "PUBLIC"."USERS" SET "ID"=? ,"EMAIL"=? ,"ENABLED"=? ,"FIRST_NAME"=? ,"LAST_NAME"=? ,"PASSWORD"=? ,"ROLES"=? ,"USERNAME"=?  WHERE "ID"=? [22018-240]

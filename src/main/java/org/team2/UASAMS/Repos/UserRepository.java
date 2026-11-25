@@ -1,6 +1,7 @@
 package org.team2.UASAMS.Repos;
 
 import org.team2.UASAMS.Entities.User;
+import org.team2.UASAMS.Entities.Enums.Major;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -16,14 +17,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying
     @Query(value = """
-        INSERT INTO student_users (id, gpa, birthday, graduation_date, school)
-        VALUES (:id, :gpa, :birthday, :graduationDate, :school)
+        INSERT INTO student_users (id, student_id_num, gpa, birthday, graduation_date, major)
+        VALUES (:id, :studentIdNum, :gpa, :birthday, :graduationDate, :major)
         """, nativeQuery = true)
     void promoteToStudentTable(
             @Param("id") Long id,
+            @Param("studentIdNum") int studentIdNum,
             @Param("gpa") float gpa,
             @Param("birthday") LocalDate birthday,
             @Param("graduationDate") LocalDate graduationDate,
-            @Param("school") String school
+            @Param("major") Major major
     );
 }

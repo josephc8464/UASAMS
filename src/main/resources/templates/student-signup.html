@@ -161,9 +161,18 @@
             <div th:if="${error}" class="error-banner" th:text="${error}"></div>
 
             <form th:action="@{/student/signup}" method="post">
+                            
                 <div class="form-group">
-                    <label for="schoolName">University / School Name</label>
-                    <input type="text" id="schoolName" name="schoolName" placeholder="e.g., University of Arizona" required />
+                    <label for="studentIdNum">Student Id Number</label>
+                    <input type="text"
+                        id="studentIdNum"
+                        name="studentIdNum"
+                        inputmode="numeric"
+                        pattern="\d{8}"
+                        maxlength="8"
+                        placeholder="12345678"
+                        title="Please enter an 8-digit student ID number"
+                        required />
                 </div>
 
                 <div class="form-group">
@@ -173,7 +182,13 @@
 
                 <div class="form-group">
                     <label for="major">Major / Field of Study</label>
-                    <input type="text" id="major" name="major" placeholder="e.g., Computer Science" required />
+                    <select id="major" name="major" required>
+                        <option value="" disabled selected>-- Select your major --</option>
+                        <option th:each="m : ${T(org.team2.UASAMS.Entities.Enums.Major).values()}"
+                                th:value="${m.name()}"
+                                th:text="${m}">
+                        </option>
+                    </select>
                 </div>
 
                 <div class="form-group">

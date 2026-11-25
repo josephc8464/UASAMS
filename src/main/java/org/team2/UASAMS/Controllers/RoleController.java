@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.team2.UASAMS.Entities.StudentUser;
+import org.team2.UASAMS.Entities.Enums.Major;
 import org.team2.UASAMS.Services.StudentService;
 
 @RequestMapping("/student/signup")
@@ -33,8 +34,9 @@ public class RoleController {
 
     @PostMapping
     public String studentSignUp(
-            @RequestParam String schoolName,
-            @RequestParam String major,
+            @RequestParam int studentIdNum,
+            @RequestParam Major major,
+            @RequestParam String email,
             @RequestParam float gpa,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate birthday,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate gradDate,
@@ -44,8 +46,8 @@ public class RoleController {
 
         try {
             StudentUser student = studentService.upgradeGuestToStudent(
-                    principal.getName(),
-                    schoolName,
+                    studentIdNum,
+                    email,
                     major,
                     gpa,
                     birthday,

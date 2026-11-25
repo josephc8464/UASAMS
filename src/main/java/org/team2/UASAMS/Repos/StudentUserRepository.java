@@ -11,16 +11,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
+
 public interface StudentUserRepository extends JpaRepository<StudentUser, Long> {
     Optional<StudentUser> findByEmail(String email); 
-    
-    List<StudentUser> findBySchool(String school);
+    List<StudentUser> findByStudentIdNum(int studentIdNum);
 
-    //List<StudentUser> findByDemographics(List<String> demographics);
     List<StudentUser> findByBirthdayGreaterThanEqual(LocalDate birthday);
 
-    List<StudentUser> findByMajors(List<String> majors);
-    //List<StudentUser> findByMinors(List<String> minors);
+    List<StudentUser> findByMajor(org.team2.UASAMS.Entities.Enums.Major major);
 
     List<StudentUser> findByGpaGreaterThanEqual(float gpa);
 

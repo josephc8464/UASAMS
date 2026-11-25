@@ -4,7 +4,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.team2.UASAMS.Entities.User;
-import org.team2.UASAMS.Entities.UserRole;
+import org.team2.UASAMS.Entities.Enums.UserRole;
 import org.team2.UASAMS.Repos.UserRepository;
 
 import jakarta.transaction.Transactional;
@@ -53,6 +53,7 @@ public class AuthService {
         user.setEmail(email);
         user.addRole(UserRole.fromString(role));
         user.setPassword(passwordEncoder.encode(password));
+        user.setEnabled(true);
 
         userRepository.save(user); 
     }

@@ -20,8 +20,35 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
             throws IOException, ServletException {
 
         // Determine role
-        //String role = authentication.getAuthorities().iterator().next().getAuthority();
+        String role = authentication.getAuthorities().iterator().next().getAuthority();
 
-        response.sendRedirect("/home");
+        if (role.equals("ROLE_GUEST")) {
+            response.sendRedirect("/guest/home");
+        } 
+        else if (role.equals("ROLE_STUDENT")) {
+            response.sendRedirect("/student/home");
+        } 
+        else if (role.equals("ROLE_ADMIN")) {
+            response.sendRedirect("/admin/home");
+        } 
+        else if (role.equals("ROLE_REVIEWER")) {
+            response.sendRedirect("/reviewer/home");
+        } 
+        else if (role.equals("ROLE_PROVIDER")) {
+            response.sendRedirect("/provider/home");
+        } 
+        else if (role.equals("ROLE_STEWARD")) {
+            response.sendRedirect("/steward/home");
+        } 
+        else if (role.equals("ROLE_STAFF")) {
+            response.sendRedirect("/staff/home");
+        } 
+        else if (role.equals("ROLE_SUPPORT")) {
+            response.sendRedirect("/support/home");
+        } 
+        else {
+            SecurityContextHolder.clearContext();
+            response.sendRedirect("/login?error=role");
+        }
     }
 }

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.team2.UASAMS.Entities.Enums.UserRole;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

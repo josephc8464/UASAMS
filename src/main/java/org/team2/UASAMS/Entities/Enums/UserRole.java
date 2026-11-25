@@ -1,4 +1,4 @@
-package org.team2.UASAMS.Entities;
+package org.team2.UASAMS.Entities.Enums;
 
 public enum UserRole {
     ROLE_GUEST,

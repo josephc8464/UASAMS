@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping("/home")
+    @GetMapping("/guest/home")
     public String home() {
-        return "home"; // optional fallback
+        return "home-pages/guest-home"; // optional fallback
     }
 }
