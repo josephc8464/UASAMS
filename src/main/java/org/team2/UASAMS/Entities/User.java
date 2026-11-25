@@ -35,6 +35,7 @@ public class User implements UserDetails {
 
     private String firstName;
     private String lastName;
+    private boolean enabled;
 
     @Column(unique = true)
     @NotNull 
@@ -65,6 +66,11 @@ public class User implements UserDetails {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.name()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
     }
 
     public void addRole(UserRole role) {
