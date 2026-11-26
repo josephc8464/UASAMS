@@ -28,7 +28,7 @@ public class ScholarshipController {
 
     @GetMapping // Handles a GET request to the URL from request
     public String listScholarships(Model model) {
-        model.addAttribute("scholarships", scholarshipService.getPublishedScholarships());
+        model.addAttribute("scholarships", scholarshipService.getOpenScholarships());
 
         return "scholarships"; // Tells Spring to render Scholarships.html
     }

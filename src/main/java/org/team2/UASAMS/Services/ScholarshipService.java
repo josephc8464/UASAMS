@@ -25,8 +25,8 @@ public class ScholarshipService {
         }
 
         // Receives scholarships whose status are "published"
-    public List<Scholarship> getPublishedScholarships() {
-        return scholarshipRepository.findByStatus("PUBLISHED");
+    public List<Scholarship> getOpenScholarships() {
+        return scholarshipRepository.findByStatus(ScholarshipStatus.OPEN);
     }
 
     /**
