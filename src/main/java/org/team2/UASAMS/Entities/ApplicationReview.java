@@ -55,13 +55,11 @@ public class ApplicationReview {
      * The application being evaluated.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "application_id", nullable = false)
     private Application application;
 
     /**
      * The user account of the reviewer who wrote this evaluation.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reviewer_user_id", nullable = false)
     private User reviewer;
 }

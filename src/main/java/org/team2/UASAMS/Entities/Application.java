@@ -59,14 +59,12 @@ public class Application {
      * The scholarship this application is for.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "scholarship_id", nullable = false)
     private Scholarship scholarship;
 
     /**
      * The student who owns and submitted this application.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_user_id", nullable = false)
     private StudentUser studentUser;
 
     /**

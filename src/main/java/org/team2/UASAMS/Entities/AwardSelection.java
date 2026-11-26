@@ -53,20 +53,17 @@ public class AwardSelection {
      * The application that was selected for this award.
      */
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "application_id", nullable = false, unique = true)
     private Application application;
 
     /**
      * The scholarship from which the award is granted.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "scholarship_id", nullable = false)
     private Scholarship scholarship;
 
     /**
      * The panel member or administrator who finalized the selection.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "designated_panel_user_id", nullable = false)
     private User designatedPanelUser;
 }

@@ -77,7 +77,6 @@ public class ApplicationDocument {
      * The application this document belongs to.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "application_id", nullable = false)
     private Application application;
 
     /**

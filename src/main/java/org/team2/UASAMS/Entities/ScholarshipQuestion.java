@@ -60,7 +60,6 @@ public class ScholarshipQuestion {
      * The scholarship that owns this question.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "scholarship_id", nullable = false)
     private Scholarship scholarship;
 
     /**

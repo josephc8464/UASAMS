@@ -43,13 +43,11 @@ public class ApplicationAnswer {
      * The application this answer belongs to.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "application_id", nullable = false)
     private Application application;
 
     /**
      * The scholarship question that this answer responds to.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_id", nullable = false)
     private ScholarshipQuestion question;
 }

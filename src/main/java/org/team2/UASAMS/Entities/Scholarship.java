@@ -5,7 +5,9 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.team2.UASAMS.Entities.Enums.Major;
 import org.team2.UASAMS.Entities.Enums.ScholarshipStatus;
@@ -68,7 +70,7 @@ public class Scholarship {
      */
     @ElementCollection(targetClass = Major.class)
     @Enumerated(EnumType.STRING)
-    private List<Major> eligibleMajors = new ArrayList<>();
+    private Set<Major> eligibleMajors = new HashSet<>();
 
     /**
      * Cutoff date and time for submitting an application.
