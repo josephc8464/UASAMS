@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import org.team2.UASAMS.Entities.Scholarship;
 import org.team2.UASAMS.Entities.ScholarshipQuestion;
+import org.team2.UASAMS.Entities.Enums.ScholarshipQuestionInputType;
 import org.team2.UASAMS.Repos.ScholarshipQuestionRepository;
 import org.team2.UASAMS.Repos.ScholarshipRepository;
 
@@ -52,7 +53,7 @@ public class ScholarshipQuestionService {
         // Uses setters to set info 
         question.setQuestionText(questionText);
         question.setRequired(required);
-        question.setInputType(inputType);
+        question.setInputType(ScholarshipQuestionInputType.fromString(inputType));
         question.setScholarship(scholarship);
 
         questionRepo.save(question);
