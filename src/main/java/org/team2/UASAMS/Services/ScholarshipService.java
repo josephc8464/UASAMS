@@ -1,78 +1,83 @@
 package org.team2.UASAMS.Services;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.team2.UASAMS.Entities.Scholarship;
-import org.team2.UASAMS.Entities.Enums.Major;
 import org.team2.UASAMS.Entities.Enums.ScholarshipStatus;
 import org.team2.UASAMS.Repos.ScholarshipRepository;
 
 import jakarta.transaction.Transactional;
 
-
-
-@Service // Tells Spring that this class provides application functionality
+/**
+ * Service layer for creating and managing {@link Scholarship} opportunities within the UASAMS system.
+ *
+ * @author Team 2
+ * @since 11/25/26
+ * @see Scholarship
+ * @see ScholarshipRepository
+ */
+@Service
 public class ScholarshipService {
-    
 
-        final ScholarshipRepository scholarshipRepository; // Constructor receives a ScholarshipRepository object (see ScholarshipRepository under Repos)
+    private final ScholarshipRepository scholarshipRepository;
 
-    public ScholarshipService(
-        ScholarshipRepository scholarshipRepository) {
-            this.scholarshipRepository = scholarshipRepository;
-        }
+    /**
+     * Constructs a {@code ScholarshipService} with the required scholarship repository.
+     *
+     * @param scholarshipRepository repository for persisting {@link Scholarship} records
+     */
+    public ScholarshipService(ScholarshipRepository scholarshipRepository) {
+        this.scholarshipRepository = scholarshipRepository;
+    }
 
-        // Receives scholarships whose status are "published"
+    /**
+     * Returns all scholarships with status "OPEN"
+     * 
+     * @return List of {@link Scholarship} entities
+     */
     public List<Scholarship> getOpenScholarships() {
         return scholarshipRepository.findByStatus(ScholarshipStatus.OPEN);
     }
 
     /**
-     * Creates a scholarship draft. Name and deadline is all that is required.
-     * 
-     * @param name
-     * @param description
-     * @param awardAmount
-     * @param providerContact
-     * @param eligibleMajors
-     * @param deadline
-     * @param disbursementInstructions
-     * @return none
-    */
+     * Validates and creates a new {@link Scholarship} listing.
+     *
+     * @param name        title of the scholarship
+     * @param description detailed overview and eligibility requirements
+     * @param awardAmount monetary value of the award (must be positive)
+     * @param deadline    submission deadline timestamp (must be in the future)
+     * @param status      initial lifecycle {@link ScholarshipStatus} (defaults to {@link ScholarshipStatus#DRAFT} if null)
+     * @return the persisted {@link Scholarship} entity
+     * @throws IllegalArgumentException if required fields are blank, award amount is non-positive, or deadline is in the past
+     */
     @Transactional
     public Scholarship createScholarship(
             String name,
             String description,
             float awardAmount,
-            String providerContact,
-            List<Major> eligibleMajors,
             LocalDateTime deadline,
-            String disbursementInstructions
-            ) {
+            ScholarshipStatus status) {
 
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Scholarship name cannot be null or empty.");
+            throw new IllegalArgumentException("Scholarship name is required");
         }
         if (awardAmount <= 0) {
-            throw new IllegalArgumentException("Award amount must be greater than zero.");
+            throw new IllegalArgumentException("Award amount must be greater than zero");
         }
         if (deadline == null || deadline.isBefore(LocalDateTime.now())) {
-            throw new IllegalArgumentException("Deadline must be a valid future date and time.");
+            throw new IllegalArgumentException("Scholarship deadline must be in the future");
         }
 
         Scholarship scholarship = new Scholarship();
         scholarship.setName(name.trim());
-        scholarship.setDescription(description);
+        scholarship.setDescription(description != null ? description.trim() : "");
         scholarship.setAwardAmount(awardAmount);
-        scholarship.setProviderContact(providerContact);
-        scholarship.setEligibleMajors(eligibleMajors != null ? new ArrayList<>(eligibleMajors) : new ArrayList<>());
         scholarship.setDeadline(deadline);
-        scholarship.setDisbursementInstructions(disbursementInstructions);
-        
-        scholarship.setStatus(ScholarshipStatus.DRAFT);
+        scholarship.setStatus(status != null ? status : ScholarshipStatus.DRAFT);
 
         return scholarshipRepository.save(scholarship);
     }
 }
+
