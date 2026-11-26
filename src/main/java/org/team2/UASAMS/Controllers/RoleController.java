@@ -1,6 +1,5 @@
 package org.team2.UASAMS.Controllers;
 
-import java.security.Principal;
 import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,21 +13,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.team2.UASAMS.Entities.StudentUser;
+import org.team2.UASAMS.Entities.User;
 import org.team2.UASAMS.Entities.Enums.Major;
-import org.team2.UASAMS.Services.StudentService;
+import org.team2.UASAMS.Services.AuthService;
+import org.team2.UASAMS.Services.StudentUserService;
 
-@RequestMapping("/student/signup")
 @Controller
+@RequestMapping("/student/signup")
 public class RoleController {
 
-    private final StudentService studentService;
+    private final StudentUserService studentUserService;
+    private final AuthService authService;
 
-    public RoleController(StudentService studentService) {
-        this.studentService = studentService;
+    public RoleController(StudentUserService studentUserService, AuthService authService) {
+        this.studentUserService = studentUserService;
+        this.authService = authService;
     }
 
     @GetMapping
     public String studentSignUp(Model model) {
+        model.addAttribute("majors", Major.values());
         return "student-signup";
     }
 
@@ -36,23 +40,21 @@ public class RoleController {
     public String studentSignUp(
             @RequestParam int studentIdNum,
             @RequestParam Major major,
-            @RequestParam String email,
             @RequestParam float gpa,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate birthday,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate gradDate,
-            @RequestParam(defaultValue = "ROLE_STUDENT") String role,
-            Principal principal,
             Model model) {
 
         try {
-            StudentUser student = studentService.upgradeGuestToStudent(
+            User currentUser = authService.getLoggedInProfile();
+
+            StudentUser student = studentUserService.createStudentFromExistingUser(
+                    currentUser,
                     studentIdNum,
-                    email,
-                    major,
                     gpa,
                     birthday,
                     gradDate,
-                    role
+                    major
             );
 
             // Refresh the active Spring Security session with the new StudentUser & authorities
@@ -66,7 +68,8 @@ public class RoleController {
 
             return "redirect:/home";
 
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            model.addAttribute("majors", Major.values());
             model.addAttribute("error", e.getMessage());
             return "student-signup";
         }

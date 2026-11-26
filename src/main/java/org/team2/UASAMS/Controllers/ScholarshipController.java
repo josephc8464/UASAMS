@@ -1,6 +1,5 @@
 package org.team2.UASAMS.Controllers;
 
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,24 +12,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.team2.UASAMS.Entities.Enums.Major;
+import org.team2.UASAMS.Entities.Enums.ScholarshipStatus;
 import org.team2.UASAMS.Services.ScholarshipService;
 
-
 @Controller
-@RequestMapping("/scholarships") // Gets URL associated with controller 
+@RequestMapping("/scholarships")
 public class ScholarshipController {
+
     private final ScholarshipService scholarshipService;
 
-    public ScholarshipController(
-        ScholarshipService scholarshipService) {
-            this.scholarshipService = scholarshipService;
-        }
+    public ScholarshipController(ScholarshipService scholarshipService) {
+        this.scholarshipService = scholarshipService;
+    }
 
-    @GetMapping // Handles a GET request to the URL from request
+    @GetMapping
     public String listScholarships(Model model) {
         model.addAttribute("scholarships", scholarshipService.getOpenScholarships());
+        return "scholarships";
+    }
 
-        return "scholarships"; // Tells Spring to render Scholarships.html
+    @GetMapping("/create")
+    public String showCreateForm(Model model) {
+        model.addAttribute("majors", Major.values());
+        return "scholarships/create";
     }
 
     @PostMapping("/create")
@@ -50,18 +54,17 @@ public class ScholarshipController {
                     name,
                     description,
                     awardAmount,
-                    providerContact,
-                    eligibleMajors,
                     deadline,
-                    disbursementInstructions
+                    ScholarshipStatus.DRAFT
             );
 
             redirectAttributes.addFlashAttribute("successMessage", "Scholarship created successfully!");
-            return "redirect:/scholarships"; // Redirect to prevent duplicate form submissions on refresh
+            return "redirect:/scholarships";
 
         } catch (IllegalArgumentException e) {
+            model.addAttribute("majors", Major.values());
             model.addAttribute("errorMessage", e.getMessage());
-            return "scholarships/create"; // Return to your form view to display the validation error
+            return "scholarships/create";
         }
     }
 }
