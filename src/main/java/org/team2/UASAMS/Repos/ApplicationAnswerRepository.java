@@ -1,6 +1,7 @@
 package org.team2.UASAMS.Repos;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.team2.UASAMS.Entities.Application;
@@ -20,4 +21,5 @@ import org.team2.UASAMS.Entities.ScholarshipQuestion;
 public interface ApplicationAnswerRepository extends JpaRepository<ApplicationAnswer, Long> {
     List<ApplicationAnswer> findByApplication(Application application);
     List<ApplicationAnswer> findByQuestion(ScholarshipQuestion question);
+    Optional<ApplicationAnswer> findByApplicationAndQuestion(Application application, ScholarshipQuestion question);
 }
