@@ -17,16 +17,16 @@ public class AuthController {
 
     @GetMapping("/login")
     public String loginPage() {
-        return "login"; // src/main/resources/templates/login.html
+        return "login";
     }
 
-    @GetMapping("/signup")
+    @GetMapping("/register")
     public String signupPage(Model model) {
         model.addAttribute("user", new User());
-        return "signup"; // src/main/resources/templates/signup.html
+        return "register";
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/register")
     public String registerUser(
             @RequestParam String username,
             @RequestParam String email,
@@ -41,7 +41,7 @@ public class AuthController {
             return "redirect:/login?registered";
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
-            return "signup";
+            return "register";
         }
     }
 }

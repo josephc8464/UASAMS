@@ -29,22 +29,22 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
             response.sendRedirect("/student/home");
         } 
         else if (role.equals("ROLE_ADMIN")) {
-            response.sendRedirect("/admin/home");
+            response.sendRedirect("/faculty/home");
         } 
         else if (role.equals("ROLE_REVIEWER")) {
-            response.sendRedirect("/reviewer/home");
+            response.sendRedirect("/faculty/home");
         } 
         else if (role.equals("ROLE_PROVIDER")) {
-            response.sendRedirect("/provider/home");
+            response.sendRedirect("/faculty/home");
         } 
         else if (role.equals("ROLE_STEWARD")) {
-            response.sendRedirect("/steward/home");
+            response.sendRedirect("/faculty/home");
         } 
         else if (role.equals("ROLE_STAFF")) {
-            response.sendRedirect("/staff/home");
+            response.sendRedirect("/faculty/home");
         } 
         else if (role.equals("ROLE_SUPPORT")) {
-            response.sendRedirect("/support/home");
+            response.sendRedirect("/faculty/home");
         } 
         else {
             SecurityContextHolder.clearContext();
