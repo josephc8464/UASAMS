@@ -1,4 +1,4 @@
-package org.team2.UASAMS.configs;
+package org.team2.UASAMS.Configs;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
