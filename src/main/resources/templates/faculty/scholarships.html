@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UASAMS - Faculty Scholarship Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/faculty/scholarships}">UASAMS | Faculty Portal</a>
+    </div>
+</nav>
+
+<div class="container">
+    <!-- Flash Feedback Alerts -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}">Success</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${errorMessage}">Error</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="mb-0">Manage Scholarships</h2>
+            <p class="text-muted small mb-0">College of Engineering Scholarship Listings</p>
+        </div>
+        <a class="btn btn-primary" th:href="@{/faculty/scholarships/create}">+ New Scholarship</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Award Amount</th>
+                        <th>Deadline</th>
+                        <th>Eligible Majors</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${#lists.isEmpty(scholarships)}">
+                        <td colspan="6" class="text-center py-4 text-muted">
+                            No scholarships found. Click <strong>+ New Scholarship</strong> to create one.
+                        </td>
+                    </tr>
+                    <tr th:each="scholarship : ${scholarships}">
+                        <td>
+                            <div class="fw-semibold" th:text="${scholarship.name}">Scholarship Title</div>
+                            <div class="small text-muted" th:text="${scholarship.providerContact}">sponsor@arizona.edu</div>
+                        </td>
+                        <td th:text="${'$' + #numbers.formatDecimal(scholarship.awardAmount, 1, 'COMMA', 2, 'POINT')}">
+                            $1,000.00
+                        </td>
+                        <td th:text="${scholarship.deadline != null ? #temporals.format(scholarship.deadline, 'MMM dd, yyyy HH:mm') : 'N/A'}">
+                            Dec 31, 2026 23:59
+                        </td>
+                        <td>
+                            <span th:if="${#sets.isEmpty(scholarship.eligibleMajors)}" class="text-muted small">All / Unspecified</span>
+                            <span th:each="m : ${scholarship.eligibleMajors}"
+                                  class="badge bg-secondary me-1 mb-1"
+                                  th:text="${m.toString()}">Major</span>
+                        </td>
+                        <td>
+                            <span class="badge"
+                                  th:classappend="${scholarship.status.name() == 'OPEN'} ? 'bg-success' :
+                                                  (${scholarship.status.name() == 'DRAFT'} ? 'bg-warning text-dark' :
+                                                  (${scholarship.status.name() == 'CLOSED'} ? 'bg-danger' : 'bg-dark'))"
+                                  th:text="${scholarship.status.toString()}">DRAFT</span>
+                        </td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-primary"
+                               th:href="@{/faculty/scholarships/{id}/edit(id=${scholarship.id})}">
+                                Manage / Edit
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
