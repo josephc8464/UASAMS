@@ -106,4 +106,133 @@ public class Scholarship {
      */
     @OneToMany(mappedBy = "scholarship")
     private List<AwardSelection> awardSelections = new ArrayList<>();
+
+    /**
+     * Links a custom application question to this scholarship.
+     *
+     * @param question the {@link ScholarshipQuestion} to attach
+     * @throws IllegalStateException if the scholarship is not in {@link ScholarshipStatus#DRAFT} status
+     */
+    public void addQuestion(ScholarshipQuestion question) {
+        if (this.status != ScholarshipStatus.DRAFT) {
+            throw new IllegalStateException("Cannot add questions to a scholarship not in DRAFT status.");
+        }
+
+        if (this.questions == null) {
+            this.questions = new ArrayList<>();
+        }
+
+        this.questions.add(question);
+        question.setScholarship(this);
+    }
+
+    /**
+     * Unlinks and removes an existing custom application question from this scholarship.
+     *
+     * @param question the {@link ScholarshipQuestion} to remove
+     * @throws IllegalStateException    if the scholarship is not in {@link ScholarshipStatus#DRAFT} status
+     * @throws IllegalArgumentException if the specified question is not associated with this scholarship
+     */
+    public void removeQuestion(ScholarshipQuestion question) {
+        if (this.status != ScholarshipStatus.DRAFT) {
+            throw new IllegalStateException("Cannot remove questions from a scholarship that is not in DRAFT status.");
+        }
+
+        if (this.questions == null) {
+            this.questions = new ArrayList<>();
+        }
+
+        if (!this.questions.contains(question)) {
+            throw new IllegalArgumentException("The specified question does not exist in this scholarship.");
+        }
+
+        this.questions.remove(question);
+        question.setScholarship(null);
+    }
+
+    /**
+     * Links a student application to this scholarship.
+     *
+     * @param application the {@link Application} to attach
+     * @throws IllegalStateException if the scholarship is not in {@link ScholarshipStatus#OPEN} status
+     */
+    public void addApplication(Application application) {
+        if (this.status != ScholarshipStatus.OPEN) {
+            throw new IllegalStateException("Cannot add applications to a scholarship not in OPEN status.");
+        }
+
+        if (this.applications == null) {
+            this.applications = new ArrayList<>();
+        }
+
+        this.applications.add(application);
+        application.setScholarship(this);
+    }
+
+    /**
+     * Unlinks and removes a student application from this scholarship.
+     *
+     * @param application the {@link Application} to remove
+     * @throws IllegalStateException    if the scholarship is not in {@link ScholarshipStatus#OPEN} status
+     * @throws IllegalArgumentException if the specified application is not associated with this scholarship
+     */
+    public void removeApplication(Application application) {
+        if (this.status != ScholarshipStatus.OPEN) {
+            throw new IllegalStateException("Cannot remove applications from a scholarship not in OPEN status.");
+        }
+
+        if (this.applications == null) {
+            this.applications = new ArrayList<>();
+        }
+
+        if (!this.applications.contains(application)) {
+            throw new IllegalArgumentException("The specified application does not exist in this scholarship.");
+        }
+
+        this.applications.remove(application);
+        application.setScholarship(null);
+    }
+
+    /**
+     * Links a final award selection decision to this scholarship.
+     *
+     * @param awardSelection the {@link AwardSelection} to attach
+     * @throws IllegalStateException if the scholarship is not in {@link ScholarshipStatus#CLOSED} status
+     */
+    public void addAwardSelection(AwardSelection awardSelection) {
+        if (this.status != ScholarshipStatus.CLOSED) {
+            throw new IllegalStateException("Cannot add award selections to a scholarship not in CLOSED status.");
+        }
+
+        if (this.awardSelections == null) {
+            this.awardSelections = new ArrayList<>();
+        }
+
+        this.awardSelections.add(awardSelection);
+        awardSelection.setScholarship(this);
+    }
+
+    /**
+     * Unlinks and removes a final award selection decision from this scholarship.
+     *
+     * @param awardSelection the {@link AwardSelection} to remove
+     * @throws IllegalStateException    if the scholarship is not in {@link ScholarshipStatus#CLOSED} status
+     * @throws IllegalArgumentException if the specified award selection is not associated with this scholarship
+     */
+    public void removeAwardSelection(AwardSelection awardSelection) {
+        if (this.status != ScholarshipStatus.CLOSED) {
+            throw new IllegalStateException("Cannot remove award selections from a scholarship not in CLOSED status.");
+        }
+
+        if (this.awardSelections == null) {
+            this.awardSelections = new ArrayList<>();
+        }
+
+        if (!this.awardSelections.contains(awardSelection)) {
+            throw new IllegalArgumentException("The specified award selection does not exist in this scholarship.");
+        }
+
+        this.awardSelections.remove(awardSelection);
+        awardSelection.setScholarship(null);
+    }
 }
