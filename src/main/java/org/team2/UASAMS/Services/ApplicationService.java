@@ -3,6 +3,7 @@ package org.team2.UASAMS.Services;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import org.team2.UASAMS.Entities.Application;
 import org.team2.UASAMS.Entities.Scholarship;
 import org.team2.UASAMS.Entities.StudentUser;
@@ -11,6 +12,14 @@ import org.team2.UASAMS.Entities.Enums.ScholarshipStatus;
 import org.team2.UASAMS.Repos.ApplicationRepository;
 
 import jakarta.transaction.Transactional;
+
+import java.util.NoSuchElementException;
+import org.springframework.security.access.AccessDeniedException;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.security.access.AccessDeniedException;
+
 
 /**
  * Service layer for initiating and managing student {@link Application} records
@@ -70,4 +79,76 @@ public class ApplicationService {
 
         return applicationRepository.save(application);
     }
+
+    @Transactional
+    public Application submitApplication(Long applicationId, Long studentId) {
+
+       
+
+        Application application = applicationRepository.findById(applicationId)
+            .orElseThrow(() ->
+                new NoSuchElementException("Application not found")
+        );
+
+
+        if (application.getStudentUser() == null || !application.getStudentUser().getId().equals(studentId)) {
+
+            throw new AccessDeniedException(
+                "You cannot submit another student's application"
+            );
+        }
+
+
+        if (application.getStatus() != ApplicationStatus.DRAFT) {
+            throw new IllegalStateException(
+        "This application has arleady been submitted");
+        }
+
+
+        Scholarship scholarship = application.getScholarship();
+
+        if (scholarship == null || scholarship.getStatus() != ScholarshipStatus.OPEN) {
+            throw new IllegalStateException(
+                "This scholarship is not accepting applications");
+        }
+
+         LocalDateTime now = LocalDateTime.now();
+
+        if (scholarship.getDeadline() == null || now.isAfter(scholarship.getDeadline())) {
+            throw new IllegalStateException(
+                "The application deadline for this scholarship has passed"
+            );
+        }
+
+        application.setStatus(ApplicationStatus.SUBMITTED);
+        application.setSubmissionDate(now);
+
+        return applicationRepository.save(application);
+    }
+
+    @Transactional 
+    public ApplicationPage getApplicationPage(
+        Long applicationId, Long studentId) {
+            Application app = applicationRepository.findById(applicationId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Application not found"));
+
+            if (app.getStudentUser() == null || !app.getStudentUser().getId().equals(studentId)) {
+                throw new AccessDeniedException("You cannot view another student's application");
+            }
+
+
+            return new ApplicationPage(
+                app.getId(),
+                app.getScholarship().getName(),
+                app.getStatus(),
+                app.getSubmissionDate()
+            );
+        }
+
+        public record ApplicationPage(
+            Long id,
+            String scholarshipName,
+            ApplicationStatus status,
+            LocalDateTime submissionDateTime
+        ) {}
 }
