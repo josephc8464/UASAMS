@@ -1,5 +1,11 @@
 package org.team2.UASAMS.Entities.Enums;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 /**
  * Represents the academic engineering and applied science majors supported in the UASAMS system.
  * <p>
@@ -78,6 +84,24 @@ public enum Major {
         }
 
         return defaultMajor;
+    }
+
+    /**
+     * Converts a collection of raw major strings into valid {@link Major} enum constants,
+     * matching either constant names or display titles and silently discarding null or unrecognized entries.
+     *
+     * @param rawMajors collection of string names or display titles to parse (may be {@code null})
+     * @return a mutable {@link Set} of valid {@link Major} enums
+     */
+    public static Set<Major> fromStrings(Collection<String> rawMajors) {
+        if (rawMajors == null) {
+            return new HashSet<>();
+        }
+        
+        return rawMajors.stream()
+                .map(Major::fromString)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toCollection(HashSet::new));
     }
 
     /**
