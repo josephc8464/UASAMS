@@ -2,6 +2,7 @@ package org.team2.UASAMS.Services;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
 import org.team2.UASAMS.Entities.Scholarship;
@@ -37,8 +38,19 @@ public class ScholarshipService {
      * 
      * @return List of {@link Scholarship} entities
      */
+
+    public List <Scholarship> getAllScholarships() {
+        return scholarshipRepository.findAll();
+    }
     public List<Scholarship> getOpenScholarships() {
         return scholarshipRepository.findByStatus(ScholarshipStatus.OPEN);
+    }
+
+    public Scholarship getScholarshipById(Long id) {
+        return scholarshipRepository.findById(id)
+            .orElseThrow(() ->
+                new NoSuchElementException("Scholarship not found")
+    );
     }
 
     /**

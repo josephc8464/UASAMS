@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Builder Questionnaire</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: #ffffff;
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .form-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .form-card h1 {
+            font-size: 1.75rem;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .form-card p.desc {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 0.95rem;
+            color: #222;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 24px 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin: 0;
+            cursor: pointer;
+            accent-color: #007bff;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .error-banner {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a th:href="@{/home}" class="logo">MyApp</a>
+        <a th:href="@{/home}" style="text-decoration: none; color: #555; font-weight: 500;">← Back to Home</a>
+    </nav>
+
+    <main>
+        <div class="form-card">
+            <h1>Student Builder Questionnaire</h1>
+            <p class="desc">
+                Complete your student profile below to upgrade your account from <strong>Guest</strong> to <strong>Student</strong>.
+            </p>
+
+            <!-- Optional error message if verification fails -->
+            <div th:if="${error}" class="error-banner" th:text="${error}"></div>
+
+            <form th:action="@{/student/signup}" method="post">
+                            
+                <div class="form-group">
+                    <label for="studentIdNum">Student Id Number</label>
+                    <input type="text"
+                        id="studentIdNum"
+                        name="studentIdNum"
+                        inputmode="numeric"
+                        pattern="\d{8}"
+                        maxlength="8"
+                        placeholder="12345678"
+                        title="Please enter an 8-digit student ID number"
+                        required />
+                </div>
+
+                <div class="form-group">
+                    <label for="schoolEmail">School Email Address (.edu)</label>
+                    <input type="email" id="schoolEmail" name="schoolEmail" placeholder="you@university.edu" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="major">Major / Field of Study</label>
+                    <select id="major" name="major" required>
+                        <option value="" disabled selected>-- Select your major --</option>
+                        <option th:each="m : ${T(org.team2.UASAMS.Entities.Enums.Major).values()}"
+                                th:value="${m.name()}"
+                                th:text="${m}">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="gpa">GPA</label>
+                    <input type="number"
+                        id="gpa"
+                        name="gpa"
+                        step="0.01"
+                        min="0.00"
+                        max="4.00"
+                        placeholder="e.g. 3.51, please round to two decimals"
+                        required />
+                </div>
+                
+                <div class="form-group">
+                    <label for="birthday">Birthday</label>
+                    <input type="date"
+                        id="birthday"
+                        name="birthday"
+                        min="1980-01-01"
+                        th:max="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
+                        required />
+                </div>
+
+                <div class="form-group">
+                    <label for="gradDate">Expected Graduation Date</label>
+                    <input type="date"
+                        id="gradDate"
+                        name="gradDate"
+                        th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"
+                        th:max="${#temporals.format(#temporals.createNow().plusYears(8), 'yyyy-MM-dd')}"
+                        required />
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="confirmStudent" name="confirmStudent" value="YES" required />
+                    <label for="confirmStudent">I certify that I am currently enrolled at this institution.</label>
+                </div>
+
+                <button type="submit" class="btn-submit">Submit & Unlock Student Access</button>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>

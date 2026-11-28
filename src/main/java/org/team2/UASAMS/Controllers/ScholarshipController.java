@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +15,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.team2.UASAMS.Entities.Enums.Major;
 import org.team2.UASAMS.Entities.Enums.ScholarshipStatus;
 import org.team2.UASAMS.Services.ScholarshipService;
+
+//import org.springframework.web.bind.annotation.PathVariable;
+import org.team2.UASAMS.Entities.Scholarship;
+
 
 @Controller
 @RequestMapping("/scholarships")
@@ -36,6 +41,17 @@ public class ScholarshipController {
         model.addAttribute("majors", Major.values());
         return "scholarships/create";
     }
+
+    @GetMapping("/{id}")
+        public String getScholarship(@PathVariable Long id, Model model) {
+
+                Scholarship scholarship = scholarshipService.getScholarshipById(id);
+                
+                model.addAttribute("scholarship", scholarship);
+
+
+                return "scholarships/detail";
+            }
 
     @PostMapping("/create")
     public String createScholarship(

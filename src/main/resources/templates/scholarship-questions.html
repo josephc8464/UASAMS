@@ -1,17 +1,55 @@
-<form th:action="@{/scholarships/{id}/questions(id=${scholarshipId})}"
-      method="post">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Scholarship Questions</title>
+</head>
+<body>
 
-    <label>Question</label>
-    <input type="text" name="questionText" required>
+    <h1>Scholarship Questions</h1>
 
-    <label>Required?</label>
-    <input type="checkbox" name="required" value="true">
+    <h2>Add a Question</h2>
 
-    <label>Input Type</label>
-    <select name="inputType">
-        <option value="TEXT">Text</option>
-        <option value="NUMBER">Number</option>
-    </select>
+    <form th:action="@{/scholarships/{id}/questions(id=${scholarshipId})}"
+          method="post">
 
-    <button type="submit">Add Question</button>
-</form>
+        <label>Question:</label>
+        <input type="text" name="questionText" required>
+
+        <label>Required?</label>
+        <input type="checkbox" name="required" value="true">
+
+        <label>Input Type:</label>
+        <select name="inputType">
+            <option value="TEXT">Text</option>
+            <option value="NUMBER">Number</option>
+        </select>
+
+        <button type="submit">Add Question</button>
+    </form>
+
+    <hr>
+
+    <h2>Saved Questions</h2>
+
+    <p th:if="${#lists.isEmpty(questions)}">
+        No questions have been added yet.
+    </p>
+
+    <ul>
+        <li th:each="question : ${questions}">
+
+            <span th:text="${question.questionText}"></span>
+
+            (<span th:text="${question.required ? 'Required' : 'Optional'}"></span>)
+
+            - <span th:text="${question.inputType}"></span>
+
+        </li>
+    </ul>
+
+    <a th:href="@{/scholarships/{id}(id=${scholarshipId})}">
+        Back to Scholarship
+    </a>
+
+</body>
+</html>

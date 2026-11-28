@@ -24,6 +24,14 @@
 
     </div>"
 
+    <div th:each="scholarship : ${scholarships}">
+        <h2 th:text="${scholarship.name}"></h2>
+
+        <a th:href="@{/scholarships/{id}(id=${scholarship.id})}">
+            View Details
+        </a>
+    </div>
+
 </body>
 
 </html>
