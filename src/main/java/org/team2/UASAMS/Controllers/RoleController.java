@@ -66,7 +66,7 @@ public class RoleController {
             );
             SecurityContextHolder.getContext().setAuthentication(updatedAuth);
 
-            return "redirect:/home";
+            return "redirect:/scholarships";
 
         } catch (IllegalArgumentException | IllegalStateException e) {
             model.addAttribute("majors", Major.values());

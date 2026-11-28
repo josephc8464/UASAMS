@@ -42,11 +42,11 @@ public class AuthService {
      * @throws RuntimeException if no matching user record is found in the database
      */
     public User getLoggedInProfile() {
-        String username = SecurityContextHolder.getContext()
+        String email = SecurityContextHolder.getContext()
                 .getAuthentication()
                 .getName();
 
-        return userRepository.findByUsername(username)
+        return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Logged-in profile not found"));
     }
 
