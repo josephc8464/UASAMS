@@ -28,5 +28,7 @@ public interface ScholarshipRepository extends JpaRepository<Scholarship, Long> 
     List<Scholarship> findByAwardSelections(List<AwardSelection> awardSelections);
     List<Scholarship> findByDeadline(LocalDateTime deadline);
     List<Scholarship> findByDescription(String description);
-    List<Scholarship> findByName(String name);
+    Scholarship findByName(String name);
+    List<Scholarship> findByStatusAndDeadlineBefore(ScholarshipStatus status, LocalDateTime now);
+    List<Scholarship> findByNameContainingIgnoreCase(String name);
 }

@@ -2,8 +2,10 @@ package org.team2.UASAMS;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableScheduling
 public class UasamsApplication {
 
 	public static void main(String[] args) {
